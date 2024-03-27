@@ -168,3 +168,17 @@ CREATE TABLE Checks_In_Archive (
     FOREIGN KEY (room_id, start_date) REFERENCES Booking_Archive(room_id, start_date),
     FOREIGN KEY (employee_sin) REFERENCES Employee(sin)
 );
+
+CREATE VIEW Num_Rooms AS
+    SELECT Hotel.id AS id, COUNT(Room.room_id) AS hotel_rooms
+    FROM Hotel JOIN Room ON Hotel.id = Room.hotel_id
+    GROUP BY Hotel.id;
+
+CREATE VIEW Area_Rooms AS
+    SELECT Hotel.city, SUM(hotel_rooms) AS total_rooms
+    FROM Hotel JOIN Num_Rooms ON Hotel.id = Num_Rooms.id
+    GROUP BY Hotel.city;
+
+CREATE INDEX Booking_Start ON Booking(start_date);
+CREATE INDEX Booking_End ON Booking(end_date);
+CREATE INDEX Room_Price ON Room(price);

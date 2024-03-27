@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RoomService {
     //make this check if the room is already in the database
-    public void createRoom(int hotelId, float price, int capacity, boolean extendable, int roomNumber) {
+    public void createRoom(Room room) {
         try {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
@@ -18,11 +18,64 @@ public class RoomService {
 
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setInt(1, hotelId);
-            ps.setFloat(2, price);
-            ps.setInt(3, capacity);
-            ps.setBoolean(4, extendable);
-            ps.setInt(5, roomNumber);
+            ps.setInt(1, room.getHotelId());
+            ps.setFloat(2, room.getPrice());
+            ps.setInt(3, room.getCapacity());
+            ps.setBoolean(4, room.isExtendable());
+            ps.setInt(5, room.getRoomNumber());
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Deletes a room from the database
+     * @param roomId the id of the room to be deleted
+     */
+    public void removeRoom(int roomId) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "DELETE FROM Room WHERE room_id = ?;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, roomId);
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Updates a room
+     * @param room a room object with the updated information
+     */
+    public void updateRoom(Room room) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "UPDATE Room SET hotel_id = ?, price = ?, capacity = ?, extendable = ?, room_number = ? WHERE room_id = ?;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, room.getHotelId());
+            ps.setFloat(2, room.getPrice());
+            ps.setInt(3, room.getCapacity());
+            ps.setBoolean(4, room.isExtendable());
+            ps.setInt(5, room.getRoomNumber());
+            ps.setInt(6, room.getRoomId());
 
             ps.executeUpdate();
 

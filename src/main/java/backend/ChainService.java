@@ -31,4 +31,33 @@ public class ChainService {
             System.out.println("Error creating chain");
         }
     }
+
+    public void deleteChain(Chain chain) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "DELETE FROM Chain " +
+                         "WHERE street_number = ? " +
+                         "AND street_name = ? " +
+                         "AND city = ? " +
+                         "AND country = ? " +
+                         "AND name = ?;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, chain.getStreetNumber());
+            ps.setString(2, chain.getStreetName());
+            ps.setString(3, chain.getCity());
+            ps.setString(4, chain.getCountry());
+            ps.setString(5, chain.getName());
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error deleting chain");
+        }
+    }
 }

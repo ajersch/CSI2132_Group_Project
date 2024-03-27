@@ -8,6 +8,13 @@ import java.util.List;
 
 public class CustomerService {
     public void createCutsomer(Customer customer) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
 
+            String sql = "";
+        } catch (Exception e) {
+            System.out.println("Error creating customer");
+        }
     }
 }
