@@ -52,7 +52,7 @@ CREATE TABLE Hotel_Email (
 
 CREATE TABLE Room (
     room_id SERIAL,
-    hotel_id int,
+    hotel_id int NOT NULL,
     price float NOT NULL,
     capacity int NOT NULL,
     extendable boolean NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE Booking (
     room_id int,
     start_date date,
     end_date date NOT NULL,
-    customer_sin int,
+    customer_sin int NOT NULL,
     PRIMARY KEY (room_id, start_date),
     FOREIGN KEY (room_id) REFERENCES Room(room_id),
     FOREIGN KEY (customer_sin) REFERENCES Customer(sin)
@@ -145,7 +145,7 @@ CREATE TABLE Booking_Archive (
     room_id int,
     start_date date,
     end_date date NOT NULL,
-    customer_sin int,
+    customer_sin int NOT NULL,
     PRIMARY KEY (room_id, start_date),
     FOREIGN KEY (room_id) REFERENCES Room(room_id),
     FOREIGN KEY (customer_sin) REFERENCES Customer(sin)
@@ -154,7 +154,7 @@ CREATE TABLE Booking_Archive (
 CREATE TABLE Checks_In (
     room_id int,
     start_date date,
-    employee_sin int,
+    employee_sin int NOT NULL,
     PRIMARY KEY (room_id, start_date),
     FOREIGN KEY (room_id, start_date) REFERENCES Booking(room_id, start_date),
     FOREIGN KEY (employee_sin) REFERENCES Employee(sin)
@@ -163,7 +163,7 @@ CREATE TABLE Checks_In (
 CREATE TABLE Checks_In_Archive (
     room_id int,
     start_date date,
-    employee_sin int,
+    employee_sin int NOT NULL,
     PRIMARY KEY (room_id, start_date),
     FOREIGN KEY (room_id, start_date) REFERENCES Booking_Archive(room_id, start_date),
     FOREIGN KEY (employee_sin) REFERENCES Employee(sin)
