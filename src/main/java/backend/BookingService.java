@@ -124,11 +124,11 @@ public class BookingService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT Room.* FROM Room JOIN Hotel ON Room.hotel_id = Hotel.id JOIN Num_Rooms ON Num_Rooms.id = Hotel.id" +
+            String sql = "SELECT Room.* FROM Room JOIN Hotel ON Room.hotel_id = Hotel.id JOIN Num_Rooms ON Num_Rooms.id = Hotel.id " +
                          "WHERE Room.archived = FALSE " +
                          "AND Room.room_id NOT IN " +
                             "(SELECT Booking.room_id FROM Booking " +
-                            "WHERE Booking.start_date < ? AND Booking.end_date > ?)";
+                            "WHERE Booking.start_date < CAST(? as date) AND Booking.end_date > CAST(? as date))";
 
             if (chainName != null) {
                 sql += " AND Hotel.chain_name = ? ";
