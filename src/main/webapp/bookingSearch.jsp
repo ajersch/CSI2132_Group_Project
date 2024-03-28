@@ -75,25 +75,14 @@
     </div>
 </div>
 
-<div class="section">
-    <h1>Booking Search<h1>
-    <% String customerSIN = request.getParameter("Customer SIN");
-    if(customerSIN == null || customerSIN == ""){
-        out.print("customer sin is null");
-        }
-    else{
-        out.print("Welcome, Customer "+ customerSIN);
-    }
-    %>
-</div>
 
 <div class="section">
     <form action="roomSelection.jsp" method="POST">
         <label class="label">Start Date</label>
-        <input class="input" type="date" name="startDate" placeholder="Select start date">
+        <input class="input" type="date" name="startDate" placeholder="Select start date" required>
 
         <label class="label">End Date</label>
-        <input class="input" type="date" name="endDate" placeholder="Select end date">
+        <input class="input" type="date" name="endDate" placeholder="Select end date" required>
 
         <label class="label">City</label>
         <input class="input" type="text" name="city" placeholder="City">
@@ -137,25 +126,12 @@
         <label class="label"> Extendable room?</label>
         <input type="checkbox" name="extendable"> I would like an extendable room.
 
-        <div><br></div>
-        <input class="button is-link" type="submit" value="submit">
-    </form>
-    <% String city = request.getParameter("city");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String chain = request.getParameter("chain");
-        String capacity = request.getParameter("capacity");
-        String rating = request.getParameter("rating");
-        String hotelRooms = request.getParameter("rating");
-        String extendable = request.getParameter("extendable");
-        out.println(city);
-        out.println(startDate);
-        out.println(endDate);
-        out.println("capacity: "+capacity);
-        out.println("rating: "+ rating);
-        out.println("extendable: "+ extendable);
 
-    %>
+
+        <div><br></div>
+        <input class="button is-link" type="submit" name="search" value="search">
+    </form>
+
 </div>
 
 

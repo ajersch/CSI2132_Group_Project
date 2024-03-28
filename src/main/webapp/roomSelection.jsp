@@ -67,19 +67,85 @@
 </nav>
 
 <%
+    if(request.getParameter("book") != null){
+    //create the booking now
+    out.println("booking pending");
+    }
+    if(request.getParameter("search") != null){
+        String startDate;
+        String endDate;
+        String chain;
+        String city;
+        int capacity;
+        int rating;
+        int hotelRooms;
+        boolean extendable;
+        float minPrice;
+        float maxPrice;
+
         BookingService bookingService = new BookingService();
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String chain = request.getParameter("chain");
-        String city = request.getParameter("city");
-        int capacity = Integer.parseInt(request.getParameter("capacity"));
-        int rating = Integer.parseInt(request.getParameter("rating"));
-        int hotelRooms = Integer.parseInt(request.getParameter("hotelRooms"));
-        boolean extendable = request.getParameter("extendable").equals("on");
-        float minPrice = Float.valueOf(request.getParameter("minPrice"));
-        float maxPrice = Float.valueOf(request.getParameter("maxPrice"));
+
+        startDate = request.getParameter("startDate");
+        endDate = request.getParameter("endDate");
+
+        if(request.getParameter("city").equals("")){
+            city = null;
+        } else{
+            city = request.getParameter("city");
+        }
+
+        if(request.getParameter("chain").equals("")){
+            chain = null;
+        } else{
+            chain = request.getParameter("chain");
+        }
+
+        if(request.getParameter("capacity")==null){
+            capacity = 0;
+        } else{
+            capacity = Integer.parseInt(request.getParameter("capacity"));
+        }
+
+        if(request.getParameter("rating")==null){
+            rating = 0;
+        } else{
+            rating = Integer.parseInt(request.getParameter("rating"));
+        }
+
+        if(request.getParameter("extendable")==null){
+            extendable = false;
+        } else{
+            extendable = true;
+        }
+
+        if(request.getParameter("hotelRooms")==null){
+            out.print("hotel rooms is null");
+            hotelRooms = 0;
+        }
+        else if(request.getParameter("hotelRooms").equals("")){
+            out.println("hotel rooms is empty");
+            hotelRooms = 0;
+        }
+        else{
+            hotelRooms = Integer.parseInt(request.getParameter("hotelRooms"));
+        }
+        if((request.getParameter("minPrice")==null)||(request.getParameter("minPrice").equals(""))){
+            out.print("min price is empty");
+
+            minPrice = 0;
+        } else{
+            minPrice = Float.parseFloat(request.getParameter("minPrice"));
+        }
+
+        if((request.getParameter("maxPrice")==null)||(request.getParameter("minPrice").equals(""))){
+            out.print("max price is empty");
+            maxPrice = 0;
+        } else{
+            maxPrice = Float.parseFloat(request.getParameter("maxPrice"));
+        }
 
         List<Room> rooms = bookingService.searchRooms(startDate,endDate,chain,city,capacity,rating,hotelRooms,minPrice,maxPrice,extendable);
+
 %>
 
 <section class="hero is-info">
@@ -97,14 +163,7 @@
 
 <div class="section">
     <h1>Booking Search<h1>
-    <% String customerSIN = request.getParameter("Customer SIN");
-    if(customerSIN == null || customerSIN == ""){
-        out.print("customer sin is null");
-        }
-    else{
-        out.print("Welcome, Customer "+ customerSIN);
-    }
-    %>
+
 </div>
 
 <div class="section">
@@ -129,8 +188,16 @@
                     <td><%= room.getPrice()%></td>
                     <td><%= room.getCapacity()%></td>
                     <td><%= room.isExtendable()%></td>
+                    <td>
+                        <form action="roomSelection.jsp" method="POST">
+                            <input type="hidden" value="<%=startDate%>" name="startDate">
+                            <input type="hidden" value="<%=endDate%>" name="endDate">
+                            <input class="button is-link" type="submit" name="book" value="book" onclick="alert('ROOM BOOKED.')">
+                        </form>
+                    </td>
                 </tr>
-                <%}%>
+                <%}
+                }%>
 
 
               </thead>

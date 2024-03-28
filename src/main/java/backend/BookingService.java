@@ -139,7 +139,7 @@ public class BookingService {
             }
 
             if (capacity > 0) {
-                sql += " AND Room.capacity = ? ";
+                sql += " AND Room.capacity >= ? ";
             }
 
             if (stars > 0) {
