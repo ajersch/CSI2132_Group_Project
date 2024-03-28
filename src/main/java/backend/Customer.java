@@ -5,18 +5,18 @@ public class Customer {
     private String firstName;
     private String lastName;
     private int streetNumber;
-    private String street;
+    private String streetName;
     private String city;
     private String country;
     private String registrationDate;
     private boolean archived;
 
-    public Customer(int sin, String firstName, String lastName, int streetNumber, String street, String city, String country, String registrationDate, boolean archived) {
+    public Customer(int sin, String firstName, String lastName, int streetNumber, String streetName, String city, String country, String registrationDate, boolean archived) {
         this.sin = sin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.streetNumber = streetNumber;
-        this.street = street;
+        this.streetName = streetName;
         this.city = city;
         this.country = country;
         this.registrationDate = registrationDate;
@@ -40,8 +40,8 @@ public class Customer {
         return streetNumber;
     }
 
-    public String getStreet() {
-        return street;
+    public String getStreetName() {
+        return streetName;
     }
 
     public String getCity() {
@@ -77,8 +77,8 @@ public class Customer {
         this.streetNumber = streetNumber;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
     }
 
     public void setCity(String city) {

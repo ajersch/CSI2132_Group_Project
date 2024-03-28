@@ -85,4 +85,37 @@ public class RoomService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * queries the view of rooms per area
+     * @return a list of pairs of city and total rooms in the area
+     */
+    public List<Pair<String, Integer>> getRoomsInArea() {
+        List<Pair<String, Integer>> roomsInArea = new ArrayList<>();
+
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM Area_Rooms;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Pair<String, Integer> pair = new Pair<>(rs.getString("city"), rs.getInt("total_rooms"));
+                roomsInArea.add(pair);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting rooms in area");
+            e.printStackTrace();
+        }
+
+        return roomsInArea;
+    }
 }

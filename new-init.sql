@@ -3,21 +3,21 @@ CREATE TABLE Chain (
 	street_name varchar(20) NOT NULL,
 	city varchar(20) NOT NULL,
 	country varchar(20) NOT NULL,
-    name varchar(20),
+    name varchar(100),
     archived boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (name)
 );
 
 CREATE TABLE Chain_Phone (
-    chain_name varchar(20),
+    chain_name varchar(100),
     phone int,
     PRIMARY KEY (chain_name, phone),
     FOREIGN KEY (chain_name) REFERENCES Chain(name)
 );
 
 CREATE TABLE Chain_Email (
-    chain_name varchar(20),
-    email varchar(40),
+    chain_name varchar(100),
+    email varchar(100),
     PRIMARY KEY (chain_name, email),
     FOREIGN KEY (chain_name) REFERENCES Chain(name)
 );
@@ -28,8 +28,8 @@ CREATE TABLE Hotel (
 	street_name varchar(20) NOT NULL,
 	city varchar(20) NOT NULL,
 	country varchar(20) NOT NULL,
-    chain_name varchar(20),
-    name varchar(20) NOT NULL,
+    chain_name varchar(100),
+    name varchar(100) NOT NULL,
     stars int NOT NULL,
     archived boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
@@ -45,7 +45,7 @@ CREATE TABLE Hotel_Phone (
 
 CREATE TABLE Hotel_Email (
     hotel_id int,
-    email varchar(40),
+    email varchar(100),
     PRIMARY KEY (hotel_id, email),
     FOREIGN KEY (hotel_id) REFERENCES Hotel(id)
 );
@@ -170,8 +170,10 @@ CREATE TABLE Checks_In_Archive (
 );
 
 CREATE VIEW Num_Rooms AS
-    SELECT Hotel.id AS id, COUNT(Room.room_id) AS hotel_rooms
+    SELECT Hotel.id, Hotel.name, COUNT(Room.room_id) AS hotel_rooms
     FROM Hotel JOIN Room ON Hotel.id = Room.hotel_id
+    WHERE Room.archived = FALSE
+    AND Hotel.archived = FALSE
     GROUP BY Hotel.id;
 
 CREATE VIEW Area_Rooms AS

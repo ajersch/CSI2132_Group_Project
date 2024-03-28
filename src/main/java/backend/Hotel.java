@@ -11,6 +11,19 @@ public class Hotel {
     private int stars;
     private boolean archived;
 
+    // constructor for inserting a hotel
+    public Hotel(int streetNumber, String streetName, String city, String country, String chainName, String name, int stars) {
+        this.id = -1;
+        this.streetNumber = streetNumber;
+        this.streetName = streetName;
+        this.city = city;
+        this.country = country;
+        this.chainName = chainName;
+        this.name = name;
+        this.stars = stars;
+        this.archived = false;
+    }
+
     public Hotel(int id, int streetNumber, String streetName, String city, String country, String chainName, String name, int stars, boolean archived) {
         this.id = id;
         this.streetNumber = streetNumber;

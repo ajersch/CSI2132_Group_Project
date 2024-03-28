@@ -58,6 +58,7 @@ public class BookingService {
             ps.close();
             dbConnection.close();
         } catch (Exception e) {
+            System.out.println("Error getting customer bookings");
             e.printStackTrace();
         }
         return bookings;
@@ -88,6 +89,7 @@ public class BookingService {
             ps.close();
             dbConnection.close();
         } catch (Exception e) {
+            System.out.println("Error checking in");
             e.printStackTrace();
         }
     }
@@ -122,7 +124,7 @@ public class BookingService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT * FROM Room JOIN Hotel ON Room.hotel_id = Hotel.id JOIN Num_Rooms ON Num_Rooms.id = Hotel.id" +
+            String sql = "SELECT Room.* FROM Room JOIN Hotel ON Room.hotel_id = Hotel.id JOIN Num_Rooms ON Num_Rooms.id = Hotel.id" +
                          "WHERE Room.archived = FALSE " +
                          "AND Room.room_id NOT IN " +
                             "(SELECT Booking.room_id FROM Booking " +
@@ -164,7 +166,11 @@ public class BookingService {
 
             PreparedStatement ps = con.prepareStatement(sql);
 
-            int i = 1;
+
+            ps.setString(1, endDate);
+            ps.setString(2, startDate);
+
+            int i = 3;
 
             if (chainName != null) {
                 ps.setString(i, chainName);
@@ -217,6 +223,7 @@ public class BookingService {
             ps.close();
             dbConnection.close();
         } catch (Exception e) {
+            System.out.println("Error searching rooms");
             e.printStackTrace();
         }
 
