@@ -29,7 +29,7 @@ public class BookingService {
             Connection con = dbConnection.getConnection();
 
             //make the sql statement with ? for values that get replaced by variables
-            String sql = "SELECT * FROM booking" +
+            String sql = "SELECT * FROM booking " +
                          "WHERE customer_sin = ?;";
 
             //prepared statement is what we use to execute it
@@ -75,7 +75,7 @@ public class BookingService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "INSERT INTO Checks_In" +
+            String sql = "INSERT INTO Checks_In " +
                          "VALUES (?, ?, ?);";
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -228,5 +228,9 @@ public class BookingService {
         }
 
         return rooms;
+    }
+
+    public void checkIn(Booking booking, int employeeSin) {
+        return;
     }
 }
