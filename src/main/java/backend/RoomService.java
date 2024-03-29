@@ -118,4 +118,64 @@ public class RoomService {
 
         return roomsInArea;
     }
+
+    /**
+     * gets the room number of a room
+     * @param roomId the id of the room
+     * @return the room number
+     */
+    public int getRoomNumber(int roomId) {
+        int roomNumber = -1;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT room_number FROM Room WHERE room_id = ?;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, roomId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                roomNumber = rs.getInt("room_number");
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting room number");
+            e.printStackTrace();
+        }
+        return roomNumber;
+    }
+
+    public boolean isCheckedIn(int roomId) {
+        boolean checkedIn = false;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT EXISTS(SELECT * FROM Checks_In WHERE room_id = ?);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, roomId);
+
+            ResultSet rs = ps.executeQuery();
+
+            checkedIn = rs.getBoolean(1);
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error checking if room is checked in");
+            e.printStackTrace();
+        }
+
+        return checkedIn;
+    }
 }

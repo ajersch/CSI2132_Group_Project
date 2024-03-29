@@ -5,17 +5,17 @@ public class Employee {
     private String firstName;
     private String lastName;
     private int streetNumber;
-    private String street;
+    private String streetName;
     private String city;
     private String country;
     private boolean archived;
 
-    public Employee(int sin, String firstName, String lastName, int streetNumber, String street, String city, String country, boolean archived) {
+    public Employee(int sin, String firstName, String lastName, int streetNumber, String streetName, String city, String country, boolean archived) {
         this.sin = sin;
         this.firstName = firstName;
         this.lastName = lastName;
         this.streetNumber = streetNumber;
-        this.street = street;
+        this.streetName = streetName;
         this.city = city;
         this.country = country;
         this.archived = archived;
@@ -38,8 +38,8 @@ public class Employee {
         return streetNumber;
     }
 
-    public String getStreet() {
-        return street;
+    public String getStreetName() {
+        return streetName;
     }
 
     public String getCity() {
@@ -71,8 +71,8 @@ public class Employee {
         this.streetNumber = streetNumber;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setStreet(String streetName) {
+        this.streetName = streetName;
     }
 
     public void setCity(String city) {

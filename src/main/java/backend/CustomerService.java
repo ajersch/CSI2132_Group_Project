@@ -99,4 +99,71 @@ public class CustomerService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Finds the first and last name of a
+     * @param sin
+     * @return
+     */
+    public Pair<String, String> getCustomerName(int sin) {
+        Pair<String, String> pair = null;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT first_name, last_name " +
+                    "FROM Customer " +
+                    "WHERE sin = ?;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, sin);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+                pair = new Pair<>(firstName, lastName);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting customer name");
+            e.printStackTrace();
+        }
+
+        return pair;
+    }
+
+    public boolean isCustomer(int sin) {
+        boolean isCustomer = false;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT EXISTS(SELECT * FROM Customer WHERE sin = ?)";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, sin);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                isCustomer = rs.getBoolean(1);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error finding customer");
+            e.printStackTrace();
+        }
+
+        return isCustomer;
+    }
 }

@@ -64,6 +64,42 @@ public class BookingService {
         return bookings;
     }
 
+    public Booking getBooknig(String startDate, int roomId) {
+        Booking booking = null;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM booking " +
+                    "WHERE start_date = ? AND room_id = ?;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, startDate);
+            ps.setInt(2, roomId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                booking = new Booking(
+                        rs.getInt("room_id"),
+                        rs.getString("start_date"),
+                        rs.getString("end_date"),
+                        rs.getInt("customer_sin")
+                );
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting booking");
+            e.printStackTrace();
+        }
+
+        return booking;
+    }
+
     /**
      * Checks in a customer
      * @param roomId the id of the room being checked in
@@ -231,6 +267,26 @@ public class BookingService {
     }
 
     public void checkIn(Booking booking, int employeeSin) {
-        return;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "INSERT INTO Checks_In " +
+                         "VALUES (?, ?, ?);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, booking.getRoomId());
+            ps.setString(2, booking.getStartDate());
+            ps.setInt(3, employeeSin);
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error checking in");
+            e.printStackTrace();
+        }
     }
 }
