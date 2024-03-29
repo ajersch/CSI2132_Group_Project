@@ -9,7 +9,7 @@ public class DBConnection {
 
     /* Database connection settings, change dbName, dbusername, dbpassword */
     private final String dbusername = "postgres";
-    private final String dbpassword = "";
+    private final String dbpassword = "RariJackAppleDash";
 
 
     private Connection con = null;

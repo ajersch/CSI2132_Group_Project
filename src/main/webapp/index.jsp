@@ -1,25 +1,21 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ACR Travel - Customer Sign In</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 <body>
-<%= request.getParameter("test")%>
-Testing 1 2 3 4 5 6 7
-<ul>
+<h1>Homepage<h1>
+<div class="section">
+    <form action="bookingSearch.jsp" method="POST">
+        <input type="text" name="Customer SIN">
+        <input type="submit" value="submit">
+    </form>
+    <%= request.getParameter("Customer SIN")%>
+</div>
 
-<%
-    for(int i = 0; i < 10; i++) {
-        out.print("<li>"+ i+"</li>");
-    }
 
-
-%>
-</ul>
 </body>
 </html>
