@@ -33,10 +33,9 @@
     String function = request.getParameter("submit");
     Room room = null;
 
-    System.out.println(function);
-
     if (function == null) {
         response.sendRedirect("employee-room-manager.jsp");
+        return;
     }
 
     int RoomId = request.getParameter("room_id") == null ? -1 : Integer.parseInt(request.getParameter("room_id"));

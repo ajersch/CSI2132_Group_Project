@@ -190,7 +190,7 @@ public class RoomService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT * FROM Room WHERE archived = FALSE ORDER BY hotel_id;";
+            String sql = "SELECT * FROM Room WHERE archived = FALSE ORDER BY hotel_id, room_number;";
 
             PreparedStatement ps = con.prepareStatement(sql);
 

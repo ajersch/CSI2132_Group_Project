@@ -4,6 +4,8 @@ package backend;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeService {
     public void createEmployee(Employee employee) {
@@ -124,9 +126,9 @@ public class EmployeeService {
             Connection con = dbConnection.getConnection();
 
             String sql = "SELECT * " +
-                    "FROM Employee " +
-                    "WHERE sin = ? " +
-                    "AND archived = FALSE;";
+                         "FROM Employee " +
+                         "WHERE sin = ? " +
+                         "AND archived = FALSE;";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -143,7 +145,7 @@ public class EmployeeService {
                         rs.getString("street_name"),
                         rs.getString("city"),
                         rs.getString("country"),
-                        false
+                        rs.getBoolean("archived")
                 );
             }
 
@@ -157,4 +159,87 @@ public class EmployeeService {
 
         return employee;
     }
+
+    public List<Employee> getAllEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * " +
+                    "FROM Employee " +
+                    "WHERE archived = FALSE " +
+                    "ORDER BY last_name, first_name;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Employee employee = new Employee(
+                    rs.getInt("sin"),
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getInt("street_number"),
+                    rs.getString("street_name"),
+                    rs.getString("city"),
+                    rs.getString("country"),
+                    rs.getBoolean("archived")
+                );
+
+                employees.add(employee);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting all employees");
+            e.printStackTrace();
+        }
+
+        return employees;
+    }
+
+//    public Employee getEmployee(int sin) {
+//        Employee employee = null;
+//
+//        try {
+//            DBConnection dbConnection = new DBConnection();
+//            Connection con = dbConnection.getConnection();
+//
+//            String sql = "SELECT * " +
+//                         "FROM Employee " +
+//                         "WHERE sin = ? " +
+//                         "AND archived = FALSE;";
+//
+//            PreparedStatement ps = con.prepareStatement(sql);
+//
+//            ps.setInt(1, sin);
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            if (rs.next()) {
+//                employee = new Employee(
+//                        sin,
+//                        rs.getString("first_name"),
+//                        rs.getString("last_name"),
+//                        rs.getInt("street_number"),
+//                        rs.getString("street_name"),
+//                        rs.getString("city"),
+//                        rs.getString("country"),
+//                        rs.getBoolean("archived")
+//                );
+//            }
+//
+//            rs.close();
+//            ps.close();
+//            dbConnection.close();
+//        } catch (Exception e) {
+//            System.out.println("Error getting employee");
+//            e.printStackTrace();
+//        }
+//
+//        return employee;
+//    }
 }

@@ -38,6 +38,7 @@
 
     if (function == null) {
         response.sendRedirect("employee-hotel-manager.jsp");
+        return;
     }
 
     int hotelId = request.getParameter("hotel_id") == null ? -1 : Integer.parseInt(request.getParameter("hotel_id"));

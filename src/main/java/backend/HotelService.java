@@ -135,7 +135,7 @@ public class HotelService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT * FROM Hotel WHERE archived = FALSE ORDER BY chain_name;";
+            String sql = "SELECT * FROM Hotel WHERE archived = FALSE ORDER BY chain_name, name;";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
