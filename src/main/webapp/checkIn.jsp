@@ -5,7 +5,7 @@
 
 <%
     // ########################### EMPLOYEE VALIDATION ###########################
-    if (session.getAttribute("sin") == null) {
+    if (session.getAttribute("user") == null) {
         session.invalidate();
         response.sendRedirect("index.jsp");
     }
@@ -40,7 +40,9 @@
                         && request.getParameter("SUBMIT").equals("check-in");
 
     if (doBooking) {
-
+        Employee employee = (Employee) session.getAttribute("user");
+        bs.checkIn(Integer.parseInt(request.getParameter("Room_Id")), request.getParameter("Start_Date"), employee.getSin());
+        validSearch = true;
     }
 
     if (validSearch) {
@@ -69,17 +71,17 @@
     <%
         if (validSearch) {
             for (Booking booking : bookings) {
-                Pair<String, String> name = cs.getCustomerName(booking.getCustomerSin());
+                Customer customer = cs.getCustomer(booking.getCustomerSin());
     %>
                 <tr>
                     <td> <%= booking.getCustomerSin() %></td>
-                    <td> <%= name.getSecond() + ", " + name.getFirst() %></td>
+                    <td> <%= customer.getFirstName() + ", " + customer.getLastName() %></td>
                     <td> <%= booking.getStartDate() %></td>
                     <td> <%= booking.getEndDate() %></td>
                     <td> <%= rs.getRoomNumber(booking.getRoomId()) %></td>
                     <td> <%= rs.isCheckedIn(booking.getRoomId()) %></td>
                     <td>
-                    <form>
+                    <form method="POST">
                         <input type="submit" name="SUBMIT" value="check-in">
                         <input type="hidden" name="Room_Id" value="<%= booking.getRoomId() %>">
                         <input type="hidden" name="Start_Date" value="<%= booking.getStartDate() %>">

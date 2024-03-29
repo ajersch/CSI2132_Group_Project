@@ -12,9 +12,9 @@ public class SessionService {
             session.setAttribute("sin", sin);
             session.setAttribute("userType", userType);
             if (userType.equals("customer")) {
-                response.sendRedirect("customerHome.jsp");
+                response.sendRedirect("home-customer.jsp");
             } else if (userType.equals("employee")) {
-                response.sendRedirect("employeeHome.jsp");
+                response.sendRedirect("home-employee.jsp");
             }
         } catch (IOException e) {
             System.out.println("Error logging in");

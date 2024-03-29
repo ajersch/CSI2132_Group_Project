@@ -9,7 +9,7 @@
 
 <%
     // ########################### EMPLOYEE VALIDATION ###########################
-    if (session.getAttribute("sin") == null) {
+    if (session.getAttribute("user") == null) {
         session.invalidate();
         response.sendRedirect("index.jsp");
     }
@@ -26,7 +26,8 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Employee Home</title>
+    <link rel="stylesheet" type="text/css" href="not-ugly.css">
 </head>
 <body>
 <a href="checkIn.jsp">Check In Page</a>
@@ -34,5 +35,16 @@
 <a href="roomsPerArea.jsp">Rooms Per Area</a>
 <br>
 <a href="roomsPerHotel.jsp">Rooms Per Hotel</a>
+<br>
+<a href="employee-chain-manager.jsp">Chain Manager</a>
+<br>
+<a href="employee-hotel-manager.jsp">Hotel Manager</a>
+<br>
+<a href="employee-room-manager.jsp">Room Manager</a>
+<br>
+<a href="employee-employee-manager.jsp">Employee Manager</a>
+<br>
+<a href="employee-customer-manager.jsp">Customer Manager</a>
+
 </body>
 </html>

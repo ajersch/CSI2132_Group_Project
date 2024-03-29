@@ -48,8 +48,9 @@ public class HotelService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "DELETE FROM Hotel " +
-                    "WHERE id = ?;";
+            String sql = "UPDATE Hotel " +
+                         "SET archived = TRUE " +
+                         "WHERE id = ?;";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -125,5 +126,85 @@ public class HotelService {
         }
 
         return roomsPerHotel;
+    }
+
+    public List<Hotel> getAllHotels() {
+        List<Hotel> hotels = new ArrayList<>();
+
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM Hotel WHERE archived = FALSE ORDER BY chain_name;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Hotel hotel = new Hotel(
+                    rs.getInt("id"),
+                    rs.getInt("street_number"),
+                    rs.getString("street_name"),
+                    rs.getString("city"),
+                    rs.getString("country"),
+                    rs.getString("chain_name"),
+                    rs.getString("name"),
+                    rs.getInt("stars"),
+                    rs.getBoolean("archived")
+                );
+
+                hotels.add(hotel);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting all hotels");
+            e.printStackTrace();
+        }
+
+        return hotels;
+    }
+
+    public Hotel getHotel(int hotelId) {
+        Hotel hotel = null;
+
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM Hotel WHERE id = ? AND archived = FALSE;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, hotelId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                hotel = new Hotel(
+                        rs.getInt("id"),
+                        rs.getInt("street_number"),
+                        rs.getString("street_name"),
+                        rs.getString("city"),
+                        rs.getString("country"),
+                        rs.getString("chain_name"),
+                        rs.getString("name"),
+                        rs.getInt("stars"),
+                        rs.getBoolean("archived")
+                );
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting hotel");
+            e.printStackTrace();
+        }
+
+        return hotel;
     }
 }

@@ -1,8 +1,31 @@
+DROP VIEW Area_Rooms;
+DROP VIEW Num_Rooms;
+
+DROP TABLE IF EXISTS Checks_In_Archive;
+DROP TABLE IF EXISTS Checks_In;
+DROP TABLE IF EXISTS Booking_Archive;
+DROP TABLE IF EXISTS Booking;
+DROP TABLE IF EXISTS Chain_Phone;
+DROP TABLE IF EXISTS Chain_Email;
+DROP TABLE IF EXISTS Hotel_Phone;
+DROP TABLE IF EXISTS Hotel_Email;
+DROP TABLE IF EXISTS Room_Amenities;
+DROP TABLE IF EXISTS Room_Features;
+DROP TABLE IF EXISTS Room_Issues;
+DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS Employee_Roles;
+DROP TABLE IF EXISTS Supervises;
+DROP TABLE IF EXISTS Works_For;
+DROP TABLE IF EXISTS Employee;
+DROP TABLE IF EXISTS Room;
+DROP TABLE IF EXISTS Hotel;
+DROP TABLE IF EXISTS Chain;
+
 CREATE TABLE Chain (
     street_number int NOT NULL,
-	street_name varchar(20) NOT NULL,
-	city varchar(20) NOT NULL,
-	country varchar(20) NOT NULL,
+    street_name varchar(20) NOT NULL,
+    city varchar(20) NOT NULL,
+    country varchar(20) NOT NULL,
     name varchar(100),
     archived boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (name)
@@ -25,10 +48,10 @@ CREATE TABLE Chain_Email (
 CREATE TABLE Hotel (
     id SERIAL,
     street_number int NOT NULL,
-	street_name varchar(100) NOT NULL,
-	city varchar(20) NOT NULL,
-	country varchar(20) NOT NULL,
-    chain_name varchar(100),
+    street_name varchar(100) NOT NULL,
+    city varchar(20) NOT NULL,
+    country varchar(20) NOT NULL,
+    chain_name varchar(100) NOT NULL,
     name varchar(100) NOT NULL,
     stars int NOT NULL,
     archived boolean NOT NULL DEFAULT FALSE,
@@ -170,24 +193,27 @@ CREATE TABLE Checks_In_Archive (
 );
 
 CREATE VIEW Num_Rooms AS
-    SELECT Hotel.id AS id, COUNT(Room.room_id) AS hotel_rooms
-    FROM Hotel JOIN Room ON Hotel.id = Room.hotel_id
-    GROUP BY Hotel.id;
+SELECT Hotel.id, Hotel.name, COUNT(Room.room_id) AS hotel_rooms
+FROM Hotel JOIN Room ON Hotel.id = Room.hotel_id
+WHERE Room.archived = FALSE
+  AND Hotel.archived = FALSE
+GROUP BY Hotel.id;
 
 CREATE VIEW Area_Rooms AS
-    SELECT Hotel.city, SUM(hotel_rooms) AS total_rooms
-    FROM Hotel JOIN Num_Rooms ON Hotel.id = Num_Rooms.id
-    GROUP BY Hotel.city;
+SELECT Hotel.city, SUM(hotel_rooms) AS total_rooms
+FROM Hotel JOIN Num_Rooms ON Hotel.id = Num_Rooms.id
+GROUP BY Hotel.city;
 
 CREATE INDEX Booking_Start ON Booking(start_date);
 CREATE INDEX Booking_End ON Booking(end_date);
 CREATE INDEX Room_Price ON Room(price);
+
 INSERT INTO Chain (street_number, street_name, city, country, name, archived)
 VALUES (100, 'Queen Street', 'Toronto', 'Canada', 'ACR_Mart', FALSE),
        (200, 'Robson Street', 'Vancouver', 'Canada', 'ACR_Honors', FALSE),
        (300, 'Rue Sainte-Catherine', 'Montreal', 'Canada', 'ACR_Suites', FALSE),
        (400, 'Portage Avenue', 'Winnipeg', 'Canada', 'ACR_Camp', FALSE),
-       (500, 'Granville Street', 'Calgary', 'Canada', 'ACR_Lodge', TRUE);
+       (500, 'Granville Street', 'Calgary', 'Canada', 'ACR_Lodge', FALSE);
 
 -- Inserting phone numbers and emails for chains
 
@@ -936,3 +962,14 @@ VALUES (40, 200.00, 2, TRUE, 1, FALSE),
        (40, 250.00, 3, TRUE, 4, FALSE),
        (40, 300.00, 4, FALSE, 5, FALSE),
        (40, 300.00, 4, FALSE, 6, FALSE);
+
+INSERT INTO Customer
+VALUES (123, 'Alex', 'Ajersch', 110, 'Havelock', 'Ottawa', 'Canada', '2020-04-02');
+
+INSERT INTO Employee
+VALUES (321, 'Alex', 'Andrus', 110, 'Havelock', 'Ottawa', 'Canada');
+
+INSERT INTO Booking
+VALUES (1, '2024-03-28', '2024-04-28', 123),
+       (2, '2024-03-28', '2024-04-28', 123),
+       (3, '2024-03-28', '2024-04-28', 123);

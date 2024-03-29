@@ -17,7 +17,7 @@ public class CustomerService {
             Connection con = dbConnection.getConnection();
 
             String sql = "INSERT INTO Customer " +
-                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, CAST(? AS DATE));";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -49,7 +49,8 @@ public class CustomerService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "DELETE FROM Customer " +
+            String sql = "UPDATE Customer " +
+                         "SET archived = TRUE " +
                          "WHERE sin = ?;";
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -105,15 +106,16 @@ public class CustomerService {
      * @param sin
      * @return
      */
-    public Pair<String, String> getCustomerName(int sin) {
-        Pair<String, String> pair = null;
+    public Customer getCustomer(int sin) {
+        Customer customer = null;
         try {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT first_name, last_name " +
+            String sql = "SELECT * " +
                     "FROM Customer " +
-                    "WHERE sin = ?;";
+                    "WHERE sin = ? " +
+                    "AND archived = FALSE;";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -122,9 +124,17 @@ public class CustomerService {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                String firstName = rs.getString("first_name");
-                String lastName = rs.getString("last_name");
-                pair = new Pair<>(firstName, lastName);
+                customer = new Customer(
+                        sin,
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("street_number"),
+                        rs.getString("street_name"),
+                        rs.getString("city"),
+                        rs.getString("country"),
+                        rs.getString("registration_date"),
+                        false
+                );
             }
 
             rs.close();
@@ -135,7 +145,7 @@ public class CustomerService {
             e.printStackTrace();
         }
 
-        return pair;
+        return customer;
     }
 
     public boolean isCustomer(int sin) {
@@ -144,7 +154,7 @@ public class CustomerService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT EXISTS(SELECT * FROM Customer WHERE sin = ?)";
+            String sql = "SELECT EXISTS(SELECT * FROM Customer WHERE sin = ? AND archived = FALSE);";
 
             PreparedStatement ps = con.prepareStatement(sql);
 

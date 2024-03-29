@@ -37,12 +37,14 @@ public class RoomService {
      * Deletes a room from the database
      * @param roomId the id of the room to be deleted
      */
-    public void removeRoom(int roomId) {
+    public void deleteRoom(int roomId) {
         try {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "DELETE FROM Room WHERE room_id = ?;";
+            String sql = "UPDATE Room " +
+                         "SET archived = TRUE " +
+                         "WHERE room_id = ?;";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -166,7 +168,9 @@ public class RoomService {
 
             ResultSet rs = ps.executeQuery();
 
-            checkedIn = rs.getBoolean(1);
+            if (rs.next()) {
+                checkedIn = rs.getBoolean(1);
+            }
 
             rs.close();
             ps.close();
@@ -177,5 +181,81 @@ public class RoomService {
         }
 
         return checkedIn;
+    }
+
+    public List<Room> getAllRooms() {
+        List<Room> rooms = new ArrayList<>();
+
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM Room WHERE archived = FALSE ORDER BY hotel_id;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Room room = new Room(
+                    rs.getInt("room_id"),
+                    rs.getInt("hotel_id"),
+                    rs.getFloat("price"),
+                    rs.getInt("capacity"),
+                    rs.getBoolean("extendable"),
+                    rs.getInt("room_number"),
+                    rs.getBoolean("archived")
+                );
+
+                rooms.add(room);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting all rooms");
+            e.printStackTrace();
+        }
+
+        return rooms;
+    }
+
+    public Room getRoom(int roomId) {
+        Room room = null;
+
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM Room WHERE room_id = ? AND archived = FALSE;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, roomId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                room = new Room(
+                        rs.getInt("room_id"),
+                        rs.getInt("hotel_id"),
+                        rs.getFloat("price"),
+                        rs.getInt("capacity"),
+                        rs.getBoolean("extendable"),
+                        rs.getInt("room_number"),
+                        rs.getBoolean("archived")
+                );
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting room");
+            e.printStackTrace();
+        }
+
+        return room;
     }
 }

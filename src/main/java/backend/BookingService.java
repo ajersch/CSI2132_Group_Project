@@ -64,7 +64,7 @@ public class BookingService {
         return bookings;
     }
 
-    public Booking getBooknig(String startDate, int roomId) {
+    public Booking getBooking(String startDate, int roomId) {
         Booking booking = null;
         try {
             DBConnection dbConnection = new DBConnection();
@@ -112,7 +112,7 @@ public class BookingService {
             Connection con = dbConnection.getConnection();
 
             String sql = "INSERT INTO Checks_In " +
-                         "VALUES (?, ?, ?);";
+                         "VALUES (?, CAST(? AS DATE), ?);";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -266,27 +266,27 @@ public class BookingService {
         return rooms;
     }
 
-    public void checkIn(Booking booking, int employeeSin) {
-        try {
-            DBConnection dbConnection = new DBConnection();
-            Connection con = dbConnection.getConnection();
-
-            String sql = "INSERT INTO Checks_In " +
-                         "VALUES (?, ?, ?);";
-
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setInt(1, booking.getRoomId());
-            ps.setString(2, booking.getStartDate());
-            ps.setInt(3, employeeSin);
-
-            ps.executeUpdate();
-
-            ps.close();
-            dbConnection.close();
-        } catch (Exception e) {
-            System.out.println("Error checking in");
-            e.printStackTrace();
-        }
-    }
+//    public void checkIn(Booking booking, int employeeSin) {
+//        try {
+//            DBConnection dbConnection = new DBConnection();
+//            Connection con = dbConnection.getConnection();
+//
+//            String sql = "INSERT INTO Checks_In " +
+//                         "VALUES (?, ?, ?);";
+//
+//            PreparedStatement ps = con.prepareStatement(sql);
+//
+//            ps.setInt(1, booking.getRoomId());
+//            ps.setString(2, booking.getStartDate());
+//            ps.setInt(3, employeeSin);
+//
+//            ps.executeUpdate();
+//
+//            ps.close();
+//            dbConnection.close();
+//        } catch (Exception e) {
+//            System.out.println("Error checking in");
+//            e.printStackTrace();
+//        }
+//    }
 }

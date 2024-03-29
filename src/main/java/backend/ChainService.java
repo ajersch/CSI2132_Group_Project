@@ -42,7 +42,8 @@ public class ChainService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "DELETE FROM Chain " +
+            String sql = "UPDATE Chain " +
+                         "SET archived = TRUE " +
                          "WHERE name = ?;";
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -90,5 +91,40 @@ public class ChainService {
             System.out.println("Error updating chain");
             e.printStackTrace();
         }
+    }
+
+    public List<Chain> getAllChains() {
+        List<Chain> chains = new ArrayList<>();
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * FROM Chain WHERE archived = FALSE ORDER BY name;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Chain chain = new Chain(
+                    rs.getInt("street_number"),
+                    rs.getString("street_name"),
+                    rs.getString("city"),
+                    rs.getString("country"),
+                    rs.getString("name"),
+                    rs.getBoolean("archived")
+                );
+
+                chains.add(chain);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting all chains");
+            e.printStackTrace();
+        }
+        return chains;
     }
 }

@@ -40,7 +40,8 @@ public class EmployeeService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "DELETE FROM Employee " +
+            String sql = "UPDATE Employee " +
+                         "SET archived = TRUE " +
                          "WHERE sin = ?;";
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -93,7 +94,7 @@ public class EmployeeService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT EXISTS(SELECT * FROM Employee WHERE sin = ?);";
+            String sql = "SELECT EXISTS(SELECT * FROM Employee WHERE sin = ? AND archived = FALSE);";
 
             PreparedStatement ps = con.prepareStatement(sql);
 
@@ -114,5 +115,46 @@ public class EmployeeService {
         }
 
         return isEmployee;
+    }
+
+    public Employee getEmployee(int sin) {
+        Employee employee = null;
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * " +
+                    "FROM Employee " +
+                    "WHERE sin = ? " +
+                    "AND archived = FALSE;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, sin);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                employee = new Employee(
+                        sin,
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("street_number"),
+                        rs.getString("street_name"),
+                        rs.getString("city"),
+                        rs.getString("country"),
+                        false
+                );
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting employee");
+            e.printStackTrace();
+        }
+
+        return employee;
     }
 }

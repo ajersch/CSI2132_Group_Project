@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    if (session.getAttribute("sin") == null) {
+    if (session.getAttribute("user") == null) {
         session.invalidate();
         response.sendRedirect("index.jsp");
     }
@@ -25,7 +25,8 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Customer Home</title>
+    <link rel="stylesheet" type="text/css" href="not-ugly.css">
 </head>
 <body>
     Customer home

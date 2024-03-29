@@ -1,0 +1,15 @@
+table tr:nth-child(odd) td{
+    background:#bcedf5;
+}
+table tr:nth-child(even) td{
+    background:#bcdef5;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+}
