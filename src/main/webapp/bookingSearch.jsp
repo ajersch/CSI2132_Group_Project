@@ -70,8 +70,8 @@
 </section>
 <div class="box">
     <div class="container">
-        <h1 class="title">Room Search<h1>
-        <h1 class="subtitle">Search our database of rooms based on your trip.<h1>
+        <h1 class="title">Room Search</h1>
+        <h1 class="subtitle">Search our database of rooms based on your trip.</h1>
     </div>
 </div>
 

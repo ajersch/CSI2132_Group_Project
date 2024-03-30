@@ -28,25 +28,28 @@
 
     List<Booking> bookings = new ArrayList<>();
 
-    boolean validSearch = request.getParameter("SUBMIT") != null
-                          && request.getParameter("Customer_Sin") != null
-                          && request.getParameter("SUBMIT") != null
-                          && request.getParameter("SUBMIT").equals("SEARCH");
+    boolean validSearch = (request.getParameter("submit") != null
+                          && request.getParameter("customer_sin") != null
+                          && request.getParameter("submit") != null
+                          && request.getParameter("submit").equals("search"))
+                          || "payed".equals(request.getAttribute("payed"));
 
-    boolean doBooking = request.getParameter("SUBMIT") != null
-                        && request.getParameter("Room_Id") != null
-                        && request.getParameter("Start_Date") != null
-                        && request.getParameter("Customer_Sin") != null
-                        && request.getParameter("SUBMIT").equals("check-in");
+    request.removeAttribute("payed");
+
+    boolean doBooking = request.getParameter("submit") != null
+                        && request.getParameter("room_id") != null
+                        && request.getParameter("start") != null
+                        && request.getParameter("customer_sin") != null
+                        && request.getParameter("submit").equals("check-in");
 
     if (doBooking) {
         Employee employee = (Employee) session.getAttribute("user");
-        bs.checkIn(Integer.parseInt(request.getParameter("Room_Id")), request.getParameter("Start_Date"), employee.getSin());
+        bs.checkIn(Integer.parseInt(request.getParameter("room_id")), request.getParameter("start"), employee.getSin());
         validSearch = true;
     }
 
     if (validSearch) {
-        bookings = bs.getCustomerBookings(Integer.parseInt(request.getParameter("Customer_Sin")));
+        bookings = bs.getCustomerBookings(Integer.parseInt(request.getParameter("customer_sin")));
     }
 %>
 <html>
@@ -54,10 +57,10 @@
     <title>Employee Check In</title>
 </head>
 <body>
-<form action="checkIn.jsp" method="POST">
-    <label for="Customer_Sin">Customer SIN:</label>
-    <input type="text" id="Customer_Sin" name="Customer_Sin">
-    <input type="submit" name="SUBMIT" value="SEARCH">
+<form action="employee-check-in.jsp" method="POST">
+    <label for="customer_sin">Customer SIN:</label>
+    <input type="text" id="customer_sin" name="customer_sin">
+    <input type="submit" name="submit" value="search">
 </form>
 <table>
     <tr>
@@ -81,11 +84,11 @@
                     <td> <%= rs.getRoomNumber(booking.getRoomId()) %></td>
                     <td> <%= rs.isCheckedIn(booking.getRoomId()) %></td>
                     <td>
-                    <form method="POST">
-                        <input type="submit" name="SUBMIT" value="check-in">
-                        <input type="hidden" name="Room_Id" value="<%= booking.getRoomId() %>">
-                        <input type="hidden" name="Start_Date" value="<%= booking.getStartDate() %>">
-                        <input type="hidden" name="Customer_Sin" value="<%= booking.getCustomerSin() %>">
+                    <form action="employee-check-in.jsp" method="POST">
+                        <input type="submit" name="submit" value="check-in">
+                        <input type="hidden" name="room_id" value="<%= booking.getRoomId() %>">
+                        <input type="hidden" name="start" value="<%= booking.getStartDate() %>">
+                        <input type="hidden" name="customer_sin" value="<%= booking.getCustomerSin() %>">
                     </form>
                     </td>
                 </tr>

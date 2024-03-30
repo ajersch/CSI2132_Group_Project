@@ -30,7 +30,7 @@
     <link rel="stylesheet" type="text/css" href="not-ugly.css">
 </head>
 <body>
-<a href="checkIn.jsp">Check In Page</a>
+<a href="employee-check-in.jsp">Check In Page</a>
 <br>
 <a href="roomsPerArea.jsp">Rooms Per Area</a>
 <br>
@@ -45,6 +45,8 @@
 <a href="employee-employee-manager.jsp">Employee Manager</a>
 <br>
 <a href="employee-customer-manager.jsp">Customer Manager</a>
+<br>
+<a href="employee-room-search.jsp">Room Search</a>
 
 </body>
 </html>

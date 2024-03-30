@@ -160,7 +160,7 @@ public class BookingService {
             DBConnection dbConnection = new DBConnection();
             Connection con = dbConnection.getConnection();
 
-            String sql = "SELECT Room.* FROM Room JOIN Hotel ON Room.hotel_id = Hotel.id JOIN Num_Rooms ON Num_Rooms.id = Hotel.id " +
+            String sql = "SELECT Room.* FROM Room JOIN Hotel ON Room.hotel_id = Hotel.id JOIN Num_Rooms ON Num_Rooms.id = Room.hotel_id " +
                          "WHERE Room.archived = FALSE " +
                          "AND Room.room_id NOT IN " +
                             "(SELECT Booking.room_id FROM Booking " +
@@ -223,7 +223,7 @@ public class BookingService {
                 i++;
             }
 
-            if (stars >= 0) {
+            if (stars > 0) {
                 ps.setInt(i, stars);
                 i++;
             }
@@ -266,27 +266,52 @@ public class BookingService {
         return rooms;
     }
 
-//    public void checkIn(Booking booking, int employeeSin) {
-//        try {
-//            DBConnection dbConnection = new DBConnection();
-//            Connection con = dbConnection.getConnection();
-//
-//            String sql = "INSERT INTO Checks_In " +
-//                         "VALUES (?, ?, ?);";
-//
-//            PreparedStatement ps = con.prepareStatement(sql);
-//
-//            ps.setInt(1, booking.getRoomId());
-//            ps.setString(2, booking.getStartDate());
-//            ps.setInt(3, employeeSin);
-//
-//            ps.executeUpdate();
-//
-//            ps.close();
-//            dbConnection.close();
-//        } catch (Exception e) {
-//            System.out.println("Error checking in");
-//            e.printStackTrace();
-//        }
-//    }
+    public void createBooking(Booking booking) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "INSERT INTO Booking " +
+                    "VALUES (?, CAST( ? AS DATE), CAST( ? AS DATE), ?);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, booking.getRoomId());
+            ps.setString(2, booking.getStartDate());
+            ps.setString(3, booking.getEndDate());
+            ps.setInt(4, booking.getCustomerSin());
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error creating booking");
+            e.printStackTrace();
+        }
+    }
+
+    public void checkIn(Booking booking, int employeeSin) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "INSERT INTO Checks_In " +
+                         "VALUES (?, CAST( ? AS DATE), ?);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, booking.getRoomId());
+            ps.setString(2, booking.getStartDate());
+            ps.setInt(3, employeeSin);
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error checking in");
+            e.printStackTrace();
+        }
+    }
 }
