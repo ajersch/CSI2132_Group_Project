@@ -29,6 +29,13 @@
     <link rel="stylesheet" type="text/css" href="not-ugly.css">
 </head>
 <body>
-    Customer home
+<a href="customer-room-search.jsp">Search for a room</a>
+<br>
+<a href="customer-booking-manager.jsp">My Bookings</a>
+<br>
+<a href="customer-profile.jsp">My Profile</a>
+<br>
+<a href="logout.jsp">Logout</a>
+<br>
 </body>
 </html>

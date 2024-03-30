@@ -314,4 +314,27 @@ public class BookingService {
             e.printStackTrace();
         }
     }
+
+    public void deleteBooking(int roomId, String startDate) {
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "DELETE FROM Booking " +
+                         "WHERE room_id = ? AND start_date = CAST( ? AS DATE);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, roomId);
+            ps.setString(2, startDate);
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error deleting booking");
+            e.printStackTrace();
+        }
+    }
 }
