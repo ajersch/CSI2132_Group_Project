@@ -56,43 +56,32 @@
     <div class="navbar-start">
 
       <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="home-customer.jsp">
-                Customer Features
-              </a>
-
-              <div class="navbar-dropdown">
-                <a class="navbar-item" href="customer-room-search.jsp">
-                  Search Rooms
-                </a>
-                <a class="navbar-item is-selected" href="customer-booking-manager.jsp">
-                  Manage Bookings
-                </a>
-              </div>
-            </div>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="home-employee.jsp">
-          Employee Features
+        <a class="navbar-link">
+            Find Rooms
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="employee-customer-manager.jsp">
-            Manage Customers
-          </a>
-          <a class="navbar-item is-selected" href="employee-employee-manager.jsp">
-            Manage Employees
-          </a>
-          <a class="navbar-item" href="employee-hotel-manager.jsp">
-            Manage Hotels
-          </a>
-          <a class="navbar-item" href="employee-chain-manager.jsp">
-            Manage Chains
-          </a>
+            <a class="navbar-item" href="customer-room-search.jsp">
+                Search Rooms
+            </a>
+            <a class="navbar-item" href="roomsPerHotel.jsp">
+                Rooms by Hotel
+            </a>
+            <a class="navbar-item" href="roomsPerArea.jsp">
+                Rooms by Area
+            </a>
         </div>
       </div>
+
+        <a class="navbar-item" href="customer-booking-manager.jsp">
+            My Bookings
+        </a>
     </div>
 
     <div class="navbar-end">
+    <a class="navbar-item" href="logout.jsp">
+        Log out
+    </a>
       <div class="navbar-item">
         <div class="buttons">
           <a class="button is-primary" href="register-customer.jsp">
@@ -106,6 +95,8 @@
     </div>
   </div>
 </nav>
+
+
 <section class="hero is-info">
   <div class="hero-body">
     <p class="title">ACR Bookings</p>
@@ -118,35 +109,40 @@
         <h1 class="subtitle">View your upcoming room reservations.</h1>
     </div>
 </div>
-<button onclick="window.location.href='customer-room-search.jsp'">Add</button>
-<table>
-    <tr>
-        <th>Hotel Name</th>
-        <th>Room Number</th>
-        <th>Check In Date</th>
-        <th>Check Out Date</th>
-        <th>Price</th>
-    </tr>
-    <% for (Booking booking : bookings) {
-    Room room = roomService.getRoom(booking.getRoomId());
-    Hotel hotel = hotelService.getHotel(room.getHotelId());
-    %>
-    <tr>
-        <td><%= hotel.getName() %></td>
-        <td><%= room.getRoomNumber() %></td>
-        <td><%= booking.getStartDate() %></td>
-        <td><%= booking.getEndDate() %></td>
-        <td><%= room.getPrice() %></td>
-        <td>
-            <form action="controller-booking.jsp" method="post">
-                <input type="hidden" name="room_id" value="<%= booking.getRoomId() %>">
-                <input type="hidden" name="start" value="<%= booking.getStartDate() %>">
-                <input type="hidden" name="submit" value="customer_delete">
-                <input type="submit" name="not_submit" value="Remove Booking">
-            </form>
-        </td>
-    </tr>
-    <% } %>
-</table>
+
+<div class="section">
+    <button class="button is-link" onclick="window.location.href='customer-room-search.jsp'">Add</button>
+    <div class="table-section">
+        <table class="table">
+            <tr>
+                <th>Hotel Name</th>
+                <th>Room Number</th>
+                <th>Check In Date</th>
+                <th>Check Out Date</th>
+                <th>Price</th>
+            </tr>
+            <% for (Booking booking : bookings) {
+            Room room = roomService.getRoom(booking.getRoomId());
+            Hotel hotel = hotelService.getHotel(room.getHotelId());
+            %>
+            <tr>
+                <td><%= hotel.getName() %></td>
+                <td><%= room.getRoomNumber() %></td>
+                <td><%= booking.getStartDate() %></td>
+                <td><%= booking.getEndDate() %></td>
+                <td><%= room.getPrice() %></td>
+                <td>
+                    <form action="controller-booking.jsp" method="post">
+                        <input type="hidden" name="room_id" value="<%= booking.getRoomId() %>">
+                        <input type="hidden" name="start" value="<%= booking.getStartDate() %>">
+                        <input type="hidden" name="submit" value="customer_delete">
+                        <input class="button is-danger is-rounded" type="submit" name="not_submit" value="Remove Booking">
+                    </form>
+                </td>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+</div>
 </body>
 </html>

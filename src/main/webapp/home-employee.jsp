@@ -45,41 +45,58 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
 
+
       <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="home-customer.jsp">
-                Customer Features
+                    <a class="navbar-link" >
+                      Find Rooms
+                    </a>
+
+                    <div class="navbar-dropdown">
+                      <a class="navbar-item" href="employee-room-search.jsp">
+                        Search Rooms
+                      </a>
+                      <a class="navbar-item" href="roomsPerHotel.jsp">
+                        Rooms by Hotel
+                      </a>
+                      <a class="navbar-item" href="roomsPerArea.jsp">
+                        Rooms by Area
+                      </a>
+                    </div>
+                  </div>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                Manage...
               </a>
 
               <div class="navbar-dropdown">
-                <a class="navbar-item" href="customer-room-search.jsp">
-                  Search Rooms
+                <a class="navbar-item" href="employee-customer-manager.jsp">
+                  Manage Customers
                 </a>
-                <a class="navbar-item is-selected" href="customer-booking-manager.jsp">
-                  Manage Bookings
+                <a class="navbar-item" href="employee-employee-manager.jsp">
+                  Manage Employees
+                </a>
+                <a class="navbar-item" href="employee-room-manager.jsp">
+                    Manage Rooms
+                </a>
+                <a class="navbar-item" href="employee-hotel-manager.jsp">
+                  Manage Hotels
+                </a>
+                <a class="navbar-item" href="employee-chain-manager.jsp">
+                  Manage Chains
+                </a>
+                <a class="navbar-item" href="employee-renting-manager.jsp">
+                    Manage Rentings
                 </a>
               </div>
             </div>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="home-employee.jsp">
-          Employee Features
-        </a>
-
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="employee-customer-manager.jsp">
-            Manage Customers
+            <a class="navbar-item" href="employee-check-in.jsp">
+                Check-In
+            </a>
+          </div>
+          <a class="navbar-item" href="logout.jsp">
+            Log out
           </a>
-          <a class="navbar-item is-selected" href="employee-employee-manager.jsp">
-            Manage Employees
-          </a>
-          <a class="navbar-item" href="employee-hotel-manager.jsp">
-            Manage Hotels
-          </a>
-          <a class="navbar-item" href="employee-chain-manager.jsp">
-            Manage Chains
-          </a>
-        </div>
-      </div>
     </div>
 
     <div class="navbar-end">

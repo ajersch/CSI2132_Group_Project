@@ -46,43 +46,32 @@
     <div class="navbar-start">
 
       <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" href="home-customer.jsp">
-                Customer Features
-              </a>
-
-              <div class="navbar-dropdown">
-                <a class="navbar-item" href="customer-room-search.jsp">
-                  Search Rooms
-                </a>
-                <a class="navbar-item is-selected" href="customer-booking-manager.jsp">
-                  Manage Bookings
-                </a>
-              </div>
-            </div>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="home-employee.jsp">
-          Employee Features
+        <a class="navbar-link">
+            Find Rooms
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="employee-customer-manager.jsp">
-            Manage Customers
-          </a>
-          <a class="navbar-item is-selected" href="employee-employee-manager.jsp">
-            Manage Employees
-          </a>
-          <a class="navbar-item" href="employee-hotel-manager.jsp">
-            Manage Hotels
-          </a>
-          <a class="navbar-item" href="employee-chain-manager.jsp">
-            Manage Chains
-          </a>
+            <a class="navbar-item" href="customer-room-search.jsp">
+                Search Rooms
+            </a>
+            <a class="navbar-item" href="roomsPerHotel.jsp">
+                Rooms by Hotel
+            </a>
+            <a class="navbar-item" href="roomsPerArea.jsp">
+                Rooms by Area
+            </a>
         </div>
       </div>
+
+        <a class="navbar-item" href="customer-booking-manager.jsp">
+            My Bookings
+        </a>
     </div>
 
     <div class="navbar-end">
+    <a class="navbar-item" href="logout.jsp">
+        Log out
+    </a>
       <div class="navbar-item">
         <div class="buttons">
           <a class="button is-primary" href="register-customer.jsp">
@@ -96,6 +85,7 @@
     </div>
   </div>
 </nav>
+
 <section class="hero is-info">
   <div class="hero-body">
     <p class="title">ACR Bookings</p>
@@ -108,63 +98,72 @@
         <h1 class="subtitle">Find rooms suited to your upcoming travels.</h1>
     </div>
 </div>
-<form action="customer-room-search-results.jsp" method="POST">
-    <label for="start">Start date:</label>
-    <input type="date" id="start" name="start" required>
-    <br>
 
-    <label for="end">End date:</label>
-    <input type="date" id="end" name="end" required>
-    <br>
+<div class="section">
+    <form action="customer-room-search-results.jsp" method="POST">
+        <label class="label" for="start">Start date:</label>
+        <input class="input" type="date" id="start" name="start" required>
+        <br>
 
-    <label for="capacity">Capacity:</label>
-    <select id="capacity" name="capacity">
-        <option value="0" selected>Select capacity</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-    </select>
-    <br>
+        <label class="label" for="end">End date:</label>
+        <input class="input" type="date" id="end" name="end" required>
+        <br>
 
-    <label for="stars">Stars:</label>
-    <select id="stars" name="stars">
-        <option value="0">Select stars</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-    <br>
+        <label class="label" for="capacity">Capacity:</label>
+        <div class="select">
+            <select id="capacity" name="capacity">
+                <option value="0" selected>Select capacity</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+        <br>
 
-    <label for="city">City:</label>
-    <input type="text" id="city" name="city">
-    <br>
+        <label class="label" for="stars">Stars:</label>
+        <div class="select">
+            <select id="stars" name="stars">
+                <option value="0">Select stars</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <br>
 
-    <label for="chain">Chain:</label>
-    <input type="text" id="chain" name="chain">
-    <br>
+        <label class="label" for="city">City:</label>
+        <input class="input" type="text" id="city" name="city">
+        <br>
 
-    <label for="min_rooms">Min rooms in hotel:</label>
-    <input type="number" id="min_rooms" name="min_rooms">
-    <br>
+        <label class="label" for="chain">Chain:</label>
+        <input class="input" type="text" id="chain" name="chain">
+        <br>
 
-    <label for="min_price">Min Price:</label>
-    <input type="number" id="min_price" name="min_price">
-    <br>
+        <label class="label" for="min_rooms">Min rooms in hotel:</label>
+        <input class="input" type="number" id="min_rooms" name="min_rooms">
+        <br>
 
-    <label for="max_price">Max Price:</label>
-    <input type="number" id="max_price" name="max_price">
-    <br>
+        <label class="label" for="min_price">Min Price:</label>
+        <input class="input" type="number" id="min_price" name="min_price">
+        <br>
 
-    <input type="checkbox" id="extendable" name="extendable" value="extendable">
-    <label for="extendable">Extendable</label>
-    <br>
+        <label class="label" for="max_price">Max Price:</label>
+        <input class="input" type="number" id="max_price" name="max_price">
+        <br>
 
-    <input type="submit" name="submit" value="search">
-</form>
+        <label class="label" for="extendable">Extendable</label>
+        <input type="checkbox" id="extendable" name="extendable" value="extendable">
+
+        <br>
+        <br>
+
+        <input class="button is-link" type="submit" name="submit" value="search">
+    </form>
+</div>
 </body>
 </html>
