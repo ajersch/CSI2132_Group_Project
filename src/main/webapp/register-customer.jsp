@@ -18,45 +18,13 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="index.jsp">
-      <img src="Acr.png"/>
+      <p class="button is-info"><strong>ACR Bookings</strong></p>
     </a>
   </div>
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item">
-        Home
-      </a>
 
-      <a class="navbar-item" href="home-customer.jsp">
-        Customer Home
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="home-employee.jsp">
-          Employee Features
-        </a>
-
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="employee-customer-manager.jsp">
-            Manage Customers
-          </a>
-          <a class="navbar-item is-selected" href="employee-employee-manager.jsp">
-            Manage Employees
-          </a>
-          <a class="navbar-item" href="employee-hotel-manager.jsp">
-            Manage Hotels
-          </a>
-          <a class="navbar-item" href="employee-chain-manager.jsp">
-            Manage Chains
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Report an issue
-          </a>
-        </div>
-      </div>
-    </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
