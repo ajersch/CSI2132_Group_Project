@@ -1,10 +1,10 @@
-<%@ page import="backend.HotelService" %>
-<%@ page import="backend.Hotel" %>
+<%@ page import="backend.CustomerService" %>
+<%@ page import="backend.Customer" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: alexa
-  Date: 3/29/2024
-  Time: 1:56 PM
+  Date: 3/30/2024
+  Time: 4:54 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -31,54 +31,55 @@
 %>
 
 <%
-    HotelService hotelService = new HotelService();
-    List<Hotel> hotels = hotelService.getAllHotels();
+  CustomerService customerService = new CustomerService();
+    List<Customer> customers = customerService.getAllCustomers();
 %>
 
 <html>
 <head>
-    <title>Hotel Manager</title>
-    <link rel="stylesheet" type="text/css" href="not-ugly.css">
-
+    <title>Customer Manager</title>
 </head>
 <body>
-<form action="update-hotel.jsp" method="POST">
+<form action="register-customer.jsp" method="POST">
     <input type="submit" name="submit" value="add">
 </form>
-
 <table>
     <tr>
+        <th>SIN</th>
+        <th>Last Name</th>
+        <th>First Name</th>
         <th>Street Number</th>
         <th>Street Name</th>
         <th>City</th>
         <th>Country</th>
-        <th>Chain</th>
-        <th>Name</th>
-        <th>Stars</th>
     </tr>
-    <% for (Hotel hotel : hotels) { %>
+    <%
+        for (Customer customer : customers) {
+    %>
     <tr>
-        <td><%= hotel.getStreetNumber() %></td>
-        <td><%= hotel.getStreetName() %></td>
-        <td><%= hotel.getCity() %></td>
-        <td><%= hotel.getCountry() %></td>
-        <td><%= hotel.getChainName() %></td>
-        <td><%= hotel.getName() %></td>
-        <td><%= hotel.getStars() %></td>
+        <td><%= customer.getSin() %></td>
+        <td><%= customer.getLastName() %></td>
+        <td><%= customer.getFirstName() %></td>
+        <td><%= customer.getStreetNumber() %></td>
+        <td><%= customer.getStreetName() %></td>
+        <td><%= customer.getCity() %></td>
+        <td><%= customer.getCountry() %></td>
         <td>
-            <form action="update-hotel.jsp" method="POST">
-                <input type="hidden" name="hotel_id" value="<%= hotel.getId() %>">
+            <form action="update-customer.jsp" method="POST">
+                <input type="hidden" name="sin" value="<%= customer.getSin() %>">
                 <input type="submit" name="submit" value="update">
             </form>
         </td>
         <td>
-            <form action="controller-hotel.jsp" method="POST">
-                <input type="hidden" name="hotel_id" value="<%= hotel.getId() %>">
+            <form action="controller-customer.jsp" method="POST">
+                <input type="hidden" name="sin" value="<%= customer.getSin() %>">
                 <input type="submit" name="submit" value="delete">
             </form>
         </td>
     </tr>
-    <% } %>
+    <%
+        }
+    %>
 </table>
 </body>
 </html>

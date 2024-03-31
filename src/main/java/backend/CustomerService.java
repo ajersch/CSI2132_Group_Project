@@ -77,7 +77,7 @@ public class CustomerService {
             Connection con = dbConnection.getConnection();
 
             String sql = "UPDATE Customer " +
-                         "SET first_name = ?, last_name = ?, street_number = ?, street_name = ?, city = ?, country = ?, registration_date = ? " +
+                         "SET first_name = ?, last_name = ?, street_number = ?, street_name = ?, city = ?, country = ?, registration_date = CAST(? AS DATE) " +
                          "WHERE sin = ?;";
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -175,5 +175,45 @@ public class CustomerService {
         }
 
         return isCustomer;
+    }
+
+    public List<Customer> getAllCustomers() {
+        List<Customer> customers = new ArrayList<>();
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "SELECT * " +
+                    "FROM Customer " +
+                    "WHERE archived = FALSE;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Customer customer = new Customer(
+                        rs.getInt("sin"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("street_number"),
+                        rs.getString("street_name"),
+                        rs.getString("city"),
+                        rs.getString("country"),
+                        rs.getString("registration_date"),
+                        rs.getBoolean("archived")
+                );
+                customers.add(customer);
+            }
+
+            rs.close();
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error getting all customers");
+            e.printStackTrace();
+        }
+
+        return customers;
     }
 }

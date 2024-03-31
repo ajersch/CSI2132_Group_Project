@@ -49,6 +49,6 @@ if (request.getParameter("login") != null && request.getParameter("login").equal
     <input type="submit" name="login" value="login">
 </form>
 
-<a href="registerCustomer.jsp">Register</a>
+<a href="register-customer.jsp">Register</a>
 </body>
 </html>

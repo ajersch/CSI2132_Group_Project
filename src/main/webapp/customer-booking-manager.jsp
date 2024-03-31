@@ -13,16 +13,19 @@
     if (session.getAttribute("user") == null) {
         session.invalidate();
         response.sendRedirect("index.jsp");
+        return;
     }
 
     if (session.getAttribute("userType") == null) {
         session.invalidate();
         response.sendRedirect("index.jsp");
+        return;
     }
 
     if (!session.getAttribute("userType").equals("customer")) {
         session.invalidate();
         response.sendRedirect("index.jsp");
+        return;
     }
 %>
 

@@ -32,7 +32,11 @@
         CustomerService cs = new CustomerService();
         cs.createCutsomer(customer);
 
-        response.sendRedirect(request.getHeader("referer"));
+        if ("employee".equals(session.getAttribute("userType"))) {
+            response.sendRedirect("employee-customer-manager.jsp");
+        } else {
+            response.sendRedirect(request.getHeader("referer"));
+        }
     }
 
     else if (function.equals("delete")) {

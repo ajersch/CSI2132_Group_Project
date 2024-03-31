@@ -47,13 +47,13 @@ CREATE TABLE Chain_Email (
 
 CREATE TABLE Hotel (
     id SERIAL,
-    street_number int NOT NULL,
+    street_number int NOT NULL CHECK ( street_number > 0),
     street_name varchar(100) NOT NULL,
     city varchar(20) NOT NULL,
     country varchar(20) NOT NULL,
     chain_name varchar(100) NOT NULL,
     name varchar(100) NOT NULL,
-    stars int NOT NULL,
+    stars int NOT NULL CHECK (stars >= 1 AND stars <= 5),
     archived boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     FOREIGN KEY (chain_name) REFERENCES Chain(name)
@@ -76,10 +76,10 @@ CREATE TABLE Hotel_Email (
 CREATE TABLE Room (
     room_id SERIAL,
     hotel_id int NOT NULL,
-    price float NOT NULL,
-    capacity int NOT NULL,
+    price float NOT NULL CHECK ( price > 0),
+    capacity int NOT NULL CHECK ( capacity > 0),
     extendable boolean NOT NULL,
-    room_number int NOT NULL,
+    room_number int NOT NULL CHECK ( room_number > 0),
     archived boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (room_id),
     FOREIGN KEY (hotel_id) REFERENCES Hotel(id)
@@ -114,7 +114,7 @@ CREATE TABLE Customer (
     street_name varchar(20) NOT NULL,
     city varchar(20) NOT NULL,
     country varchar(20) NOT NULL,
-    registration_date date NOT NULL,
+    registration_date date NOT NULL CHECK ( registration_date <= CURRENT_DATE),
     archived boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (sin)
 );
