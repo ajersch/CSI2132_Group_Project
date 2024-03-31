@@ -35,7 +35,7 @@
     }
 
     else if (function.equals("delete")) {
-        int sin = Integer.parseInt(request.getParameter("sin"));
+        int sin = Integer.parseInt(request.getParameter("employee_sin"));
 
         EmployeeService es = new EmployeeService();
         es.deleteEmployee(sin);

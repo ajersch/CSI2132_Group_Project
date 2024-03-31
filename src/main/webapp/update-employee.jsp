@@ -30,7 +30,7 @@
 %>
 
 <%
-    String function = request.getParameter("function");
+    String function = request.getParameter("submit");
     Employee employee = null;
 
     if (function == null) {
@@ -38,7 +38,7 @@
         return;
     }
 
-    int employeeSin = request.getParameter("employeeSin") == null ? -1 : Integer.parseInt(request.getParameter("employee_sin"));
+    int employeeSin = request.getParameter("employee_sin") == null ? -1 : Integer.parseInt(request.getParameter("employee_sin"));
 
     if (function.equals("update")) {
         EmployeeService employeeService = new EmployeeService();
@@ -134,19 +134,19 @@
 </div>
 <form action="controller-employee.jsp" method="POST">
     <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName" value="<%= firstName %>" required>
+    <input type="text" id="firstName" name="first_name" value="<%= firstName %>" required>
     <br>
 
     <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" value="<%= lastName %>" required>
+    <input type="text" id="lastName" name="last_name" value="<%= lastName %>" required>
     <br>
 
     <label for="streetNumber">Street Number:</label>
-    <input type="number" id="streetNumber" name="streetNumber" value="<%= streetNumber %>" required>
+    <input type="number" id="streetNumber" name="street_number" value="<%= streetNumber %>" required>
     <br>
 
     <label for="streetName">Street Name:</label>
-    <input type="text" id="streetName" name="streetName" value="<%= streetName %>" required>
+    <input type="text" id="streetName" name="street_name" value="<%= streetName %>" required>
     <br>
 
     <label for="city">City:</label>
@@ -157,7 +157,12 @@
     <input type="text" id="country" name="country" value="<%= country %>" required>
     <br>
 
-    <input type="hidden" name="employee_sin" value="<%= employeeSin %>">
+    <% if (function.equals("update")) { %>
+    <input type="hidden" name="sin" value="<%= employeeSin %>">
+    <% } else { %>
+        <label for="employee_sin">Employee SIN:</label>
+        <input type="number" id="employee_sin" name="sin">
+    <% } %>
 
     <input type="submit" name="submit" value="<%= function %>">
 </form>
