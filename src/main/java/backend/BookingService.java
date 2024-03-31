@@ -337,4 +337,29 @@ public class BookingService {
             e.printStackTrace();
         }
     }
+
+    public void addBooking(Booking booking){
+        try {
+            DBConnection dbConnection = new DBConnection();
+            Connection con = dbConnection.getConnection();
+
+            String sql = "INSERT INTO Booking " +
+                    "VALUES (?, ?, ?, ?);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setInt(1, booking.getRoomId());
+            ps.setString(2, booking.getStartDate());
+            ps.setString(3, booking.getEndDate());
+            ps.setInt(4, booking.getCustomerSin());
+
+            ps.executeUpdate();
+
+            ps.close();
+            dbConnection.close();
+        } catch (Exception e) {
+            System.out.println("Error adding booking");
+            e.printStackTrace();
+        }
+    }
 }

@@ -9,44 +9,114 @@
 
 <html>
 <head>
-    <title>Register Customer</title>
-    <link rel="stylesheet" type="text/css" href="not-ugly.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACR Bookings - Register Customer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 <body>
-<form action="controller-customer.jsp" method="POST">
-    <label for="sin">SIN:</label>
-    <input type="number" name="sin" id="sin" required>
-    <br>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="index.jsp">
+      <img src="Acr.png"/>
+    </a>
+  </div>
 
-    <label for="first_name">First Name:</label>
-    <input type="text" name="first_name" id="first_name" required>
-    <br>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Home
+      </a>
 
-    <label for="last_name">Last Name:</label>
-    <input type="text" name="last_name" id="last_name" required>
-    <br>
+      <a class="navbar-item" href="home-customer.jsp">
+        Customer Home
+      </a>
 
-    <label for="street_number">Street Number:</label>
-    <input type="number" name="street_number" id="street_number" required>
-    <br>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="home-employee.jsp">
+          Employee Features
+        </a>
 
-    <label for="street_name">Street Name:</label>
-    <input type="text" name="street_name" id="street_name" required>
-    <br>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="employee-customer-manager.jsp">
+            Manage Customers
+          </a>
+          <a class="navbar-item is-selected" href="employee-employee-manager.jsp">
+            Manage Employees
+          </a>
+          <a class="navbar-item" href="employee-hotel-manager.jsp">
+            Manage Hotels
+          </a>
+          <a class="navbar-item" href="employee-chain-manager.jsp">
+            Manage Chains
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            Report an issue
+          </a>
+        </div>
+      </div>
+    </div>
 
-    <label for="city">City:</label>
-    <input type="text" name="city" id="city" required>
-    <br>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="register-customer.jsp">
+            <strong>Register</strong>
+          </a>
+          <a class="button is-link" href="index.jsp">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 
-    <label for="country">Country:</label>
-    <input type="text" name="country" id="country" required>
-    <br>
+<div class="box">
+    <div class="container">
+        <h1 class="title">Customer Registration</h1>
+        <h1 class="subtitle">Sign up with ACR bookings to find your next dream hotel!</h1>
+    </div>
+</div>
 
-    <label for="registration_date">Date:</label>
-    <input type="date" name="registration_date" id="registration_date" required>
-    <br>
+<div class="section">
+    <form action="controller-customer.jsp" method="POST">
+        <label class="label" for="sin">SIN:</label>
+        <input class="input" type="number" name="sin" id="sin" required>
+        <br>
 
-    <input type="submit" name="submit" value="add">
-</form>
+        <label class="label" for="first_name">First Name:</label>
+        <input class="input" type="text" name="first_name" id="first_name" required>
+        <br>
+
+        <label class="label"for="last_name">Last Name:</label>
+        <input class="input"type="text" name="last_name" id="last_name" required>
+        <br>
+
+        <label class="label"for="street_number">Street Number:</label>
+        <input class="input"type="number" name="street_number" id="street_number" required>
+        <br>
+
+        <label class="label"for="street_name">Street Name:</label>
+        <input class="input"type="text" name="street_name" id="street_name" required>
+        <br>
+
+        <label class="label"for="city">City:</label>
+        <input class="input"type="text" name="city" id="city" required>
+        <br>
+
+        <label class="label"for="country">Country:</label>
+        <input class="input"type="text" name="country" id="country" required>
+        <br>
+
+        <label class="label"for="registration_date">Date:</label>
+        <input class="input"type="date" name="registration_date" id="registration_date" required>
+        <br>
+        <br>
+
+        <input class="button is-link" type="submit" name="submit" value="add">
+    </form>
+</div>
 </body>
 </html>

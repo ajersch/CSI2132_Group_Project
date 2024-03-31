@@ -20,8 +20,8 @@
         Home
       </a>
 
-      <a class="navbar-item">
-        Hotel Search
+      <a class="navbar-item" href="bookingSearch.jsp">
+        Room Search
       </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
